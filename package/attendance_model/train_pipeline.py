@@ -1,6 +1,7 @@
 
 import numpy as np
-from config.core import config
+import pandas as pd
+from attendance_model.config.core import config
 from pipeline import price_pipe
 from processing.data_manager import load_dataset, save_pipeline
 
