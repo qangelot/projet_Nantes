@@ -16,7 +16,7 @@ class DatetimeVariableEstimator(BaseEstimator, TransformerMixin):
 
         self.date_variable = date_variable
 
-    def fit(self, X: pd.DataFrame):
+    def fit(self, X: pd.DataFrame, y: pd.Series = None):
         # we need this step to fit the sklearn pipeline
         return self
 
@@ -32,6 +32,7 @@ class DatetimeVariableEstimator(BaseEstimator, TransformerMixin):
         X['day_of_year_sin'] = np.sin(2 * np.pi * X[self.date_variable].dt.dayofyear /max(X[self.date_variable].dt.dayofyear))
         X['day_of_year_cos'] =  np.cos(2 * np.pi * X[self.date_variable].dt.dayofyear/max(X[self.date_variable].dt.dayofyear))
         X['week_sin'] = X[self.date_variable].dt.isocalendar().week
+        X.set_index('date', inplace=True) 
 
         return X
 
@@ -51,7 +52,7 @@ class StatisticalVariableEstimator(BaseEstimator, TransformerMixin):
         self.prevision = prevision
         self.effectif = effectif
 
-    def fit(self, X: pd.DataFrame):
+    def fit(self, X: pd.DataFrame, y: pd.Series = None):
         # we need this step to fit the sklearn pipeline
         return self
 
@@ -105,7 +106,7 @@ class InterpolateImputer(BaseEstimator, TransformerMixin):
         self.prevision = prevision
 
 
-    def fit(self, X: pd.DataFrame):
+    def fit(self, X: pd.DataFrame, y: pd.Series = None):
         # we need this step to fit the sklearn pipeline
         return self
 
@@ -134,7 +135,7 @@ class NumericalImputer(BaseEstimator, TransformerMixin):
 
         self.variables = variables
 
-    def fit(self, X, y=None):
+    def fit(self, X, y: pd.Series = None):
         # persist median in a dictionary
         self.imputer_dict_ = {}
 

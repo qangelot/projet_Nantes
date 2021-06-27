@@ -1,8 +1,7 @@
-
 import numpy as np
 import pandas as pd
 from attendance_model.config.core import config
-from pipeline import price_pipe
+from pipeline import freq_pipeline
 from processing.data_manager import load_dataset, save_pipeline
 
 
@@ -19,8 +18,6 @@ def timeseries_train_test_split(data, split_date):
     X_train = data.loc[data['date'] < split_date]
     X_test = data.loc[data['date'] >= split_date]
     
-    X_train.set_index('date', inplace=True) 
-    X_test.set_index('date', inplace=True)
     
     y_train = X_train.reel
     X_train = X_train.drop(['reel'], axis=1)
@@ -53,7 +50,7 @@ def zscore_outliers(data, column, n):
     data["upper_outlier"] = data[column] > data['upper_bound']
     data["lower_outlier"] = data[column] < data['lower_bound']
 
-    data.drop(['upper_bound', 'lower_bound',"mean", "std"], axis=1, inplace=True)
+    data.drop(['upper_bound', 'lower_bound','mean', 'std'], axis=1, inplace=True)
 
     return data
 
@@ -71,6 +68,7 @@ def run_training() -> None:
     # strikes are not predictible by nature
     data = zscore_outliers(data, config.app_config.target, 2)
     data = data.loc[(data['greve'] != 1) & (data['reel'] != 0) & (data['upper_outlier'] != 1) & (data['lower_outlier'] != 1)]
+    data.drop(['greve'], axis=1, inplace=True)
 
     data = data.dropna(axis=0, subset=[config.app_config.target])
 
@@ -82,10 +80,10 @@ def run_training() -> None:
     y_train = y_train**(1/2)
 
     # fit model
-    price_pipe.fit(X_train, y_train)
+    freq_pipeline.fit(X_train, y_train)
 
     # persist trained model
-    save_pipeline(pipeline_to_persist=price_pipe)
+    save_pipeline(pipeline_to_persist=freq_pipeline)
 
 
 if __name__ == "__main__":

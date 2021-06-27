@@ -9,7 +9,7 @@ from attendance_model.processing.validation import validate_inputs
 
 
 pipeline_file_name = f"{config.app_config.pipeline_save_file}{_version}.pkl"
-_price_pipe = load_pipeline(file_name=pipeline_file_name)
+_freq_pipeline = load_pipeline(file_name=pipeline_file_name)
 
 
 def make_prediction(
@@ -23,8 +23,13 @@ def make_prediction(
     results = {"predictions": None, "version": _version, "errors": errors}
 
     if not errors:
-        predictions = _price_pipe.predict(
-            X=validated_data[config.model_config.features]
+
+        # removing strike days if any because we focus on predicting normal period
+        validated_data = validated_data.loc[(validated_data['greve'] != 1)]
+        validated_data.drop(['greve'], axis=1, inplace=True)    
+        
+        predictions = _freq_pipeline.predict(
+            X=validated_data
         )
         results = {
             "predictions": [pred**2 for pred in predictions],

@@ -2,7 +2,7 @@
 package_name: attendance_model
 
 # Data File
-training_data_file: data.csv
+training_data_file: frequentation_dtwh.db
 
 # Variables
 target: reel
@@ -12,6 +12,7 @@ pipeline_save_file: attendance_model_output_v
 
 
 features:
+  - date
   - prevision
   - cantine_nom
   - annee_scolaire
@@ -34,6 +35,7 @@ features:
   - week_sin 
   - freq_reel_%
   - freq_reel_%_std
+  - greve
 
 
 test_size: 0.1
