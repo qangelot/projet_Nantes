@@ -1,0 +1,68 @@
+# Package Overview
+package_name: attendance_model
+
+# Data File
+training_data_file: data.csv
+
+# Variables
+target: reel
+
+pipeline_name: attendance_model
+pipeline_save_file: attendance_model_output_v
+
+
+features:
+  - prevision
+  - cantine_nom
+  - annee_scolaire
+  - effectif
+  - quartier_detail
+  - prix_quartier_detail_m2_appart
+  - prix_moyen_m2_appartement
+  - prix_moyen_m2_maison
+  - longitude
+  - latitude
+  - depuis_vacances
+  - depuis_ferie
+  - depuis_juives
+  - ramadan_dans
+  - depuis_ramadan
+  - year
+  - day_of_week_sin
+  - day_of_year_sin
+  - day_of_year_cos
+  - week_sin 
+  - freq_reel_%
+  - freq_reel_%_std
+
+
+test_size: 0.1
+
+split_date: '2018-09-03'
+
+random_state: 42
+
+max_depth: 5
+
+n_estimators: 150
+
+num_leaves: 8
+
+
+# variables with NA in train set
+num_vars_with_na_interpolate:
+  - prevision
+
+categorical_vars_with_na:
+  - cantine_nom
+  - annee_scolaire
+  - quartier_detail
+
+numerical_vars_with_na:
+  - prix_quartier_detail_m2_appart
+  - prix_moyen_m2_appartement
+  - prix_moyen_m2_maison
+  - longitude
+  - latitude
+  - freq_reel_%
+  - freq_reel_%_std
