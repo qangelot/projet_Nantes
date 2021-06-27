@@ -1,11 +1,10 @@
 from pathlib import Path
-from typing import Dict, List, Sequence
+from typing import List
 
 from pydantic import BaseModel
 from strictyaml import YAML, load
 
 import attendance_model
-
 
 # Project Directories
 PACKAGE_ROOT = Path(attendance_model.__file__).resolve().parent
@@ -14,6 +13,7 @@ CONFIG_FILE_PATH = PACKAGE_ROOT / "config.yml"
 DATASET_DIR = PACKAGE_ROOT / "datasets"
 TRAINED_MODEL_DIR = PACKAGE_ROOT / "trained_models"
 
+
 class AppConfig(BaseModel):
     """
     Application-level config.
@@ -21,7 +21,6 @@ class AppConfig(BaseModel):
 
     package_name: str
     training_data_file: str
-    test_data_file: str
     pipeline_save_file: str
 
 
@@ -34,11 +33,11 @@ class ModelConfig(BaseModel):
     target: str
     features: List[str]
     test_size: float
+    split_date: str
     random_state: int
     max_depth: int
-    n_estimators:int
-    num_leaves:int
-    num_vars_with_na_interpolate: str
+    n_estimators: int
+    num_leaves: int
     categorical_vars_with_na: List[str]
     numerical_vars_with_na: List[str]
 
@@ -48,7 +47,6 @@ class Config(BaseModel):
 
     app_config: AppConfig
     model_config: ModelConfig
-
 
 
 def find_config_file() -> Path:

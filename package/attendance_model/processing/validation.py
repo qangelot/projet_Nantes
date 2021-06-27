@@ -18,8 +18,7 @@ def drop_na_inputs(*, input_data: pd.DataFrame) -> pd.DataFrame:
         var
         for var in config.model_config.features
         if var
-        not in config.model_config.num_vars_with_na_interpolate
-        + config.model_config.categorical_vars_with_na
+        not in config.model_config.categorical_vars_with_na
         + config.model_config.numerical_vars_with_na
         and validated_data[var].isnull().sum() > 0
     ]
@@ -68,4 +67,5 @@ class DataInputSchema(BaseModel):
 
 class MultipleDataInputs(BaseModel):
     """In case, mutliple inputs are provided."""
+
     inputs: List[DataInputSchema]

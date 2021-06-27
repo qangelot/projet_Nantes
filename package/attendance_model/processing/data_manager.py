@@ -1,11 +1,9 @@
-
+import sqlite3 as sql
 import typing as t
 from pathlib import Path
 
 import joblib
 import pandas as pd
-import sqlite3 as sql
-
 from sklearn.pipeline import Pipeline
 
 from attendance_model import __version__ as _version
@@ -19,7 +17,7 @@ def load_dataset(*, file_name: str) -> pd.DataFrame:
     cursor = conn.cursor()
 
     SQL_Query = pd.read_sql_query(
-        '''select 
+        """select 
     Frequentation_quotidienne.date, 
     Frequentation_quotidienne.prevision, 
     Frequentation_quotidienne.reel,
@@ -47,14 +45,33 @@ def load_dataset(*, file_name: str) -> pd.DataFrame:
     left join Dim_evenement          on Frequentation_quotidienne.jour_id = Dim_evenement.jour_id
 
     order by Frequentation_quotidienne.jour_site_id
-    ''', conn)
+    """,
+        conn,
+    )
 
-    dataframe = pd.DataFrame(SQL_Query, columns=['date', 'prevision', 'reel', 'cantine_nom',
-                                            'annee_scolaire', 'effectif', 'quartier_detail',
-                                            'prix_quartier_detail_m2_appart', 'prix_moyen_m2_appartement',
-                                            'prix_moyen_m2_maison', 'longitude', 'latitude',
-                                            'depuis_vacances', 'depuis_ferie', 'depuis_juives', 'ramadan_dans', 'depuis_ramadan',
-                                            'greve'])
+    dataframe = pd.DataFrame(
+        SQL_Query,
+        columns=[
+            "date",
+            "prevision",
+            "reel",
+            "cantine_nom",
+            "annee_scolaire",
+            "effectif",
+            "quartier_detail",
+            "prix_quartier_detail_m2_appart",
+            "prix_moyen_m2_appartement",
+            "prix_moyen_m2_maison",
+            "longitude",
+            "latitude",
+            "depuis_vacances",
+            "depuis_ferie",
+            "depuis_juives",
+            "ramadan_dans",
+            "depuis_ramadan",
+            "greve",
+        ],
+    )
 
     return dataframe
 
@@ -83,7 +100,7 @@ def load_pipeline(*, file_name: str) -> Pipeline:
 
 def remove_old_pipelines(*, files_to_keep: t.List[str]) -> None:
     """
-    This is to ensure a simple one-to-one mapping between the package version 
+    This is to ensure a simple one-to-one mapping between the package version
     and the model version to be imported and used by other applications.
     """
     do_not_delete = files_to_keep + ["__init__.py"]

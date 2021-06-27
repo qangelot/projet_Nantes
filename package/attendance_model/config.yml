@@ -40,7 +40,7 @@ features:
 
 test_size: 0.1
 
-split_date: '2018-09-03'
+split_date: 2018-09-03
 
 random_state: 42
 
@@ -52,9 +52,6 @@ num_leaves: 8
 
 
 # variables with NA in train set
-num_vars_with_na_interpolate:
-  - prevision
-
 categorical_vars_with_na:
   - cantine_nom
   - annee_scolaire
