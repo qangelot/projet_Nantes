@@ -18,7 +18,7 @@ freq_pipeline = Pipeline(
         (
             "statistical_features",
             fe.StatisticalVariableEstimator(prevision="prevision", effectif="effectif"),
-        )
+        ),
         # ===== IMPUTATION =====
         # impute prevision variable with interpolate method
         (
