@@ -69,7 +69,7 @@ def run_training() -> None:
     # that Nantes metropole wants a model to predict "normal periods" first
     # most of the zeros are due to mistakes and are not meaningful values
     # strikes are not predictible by nature
-    data = zscore_outliers(data, config.app_config.target, 2)
+    data = zscore_outliers(data, config.model_config.target, 2)
     data = data.loc[
         (data["greve"] != 1)
         & (data["reel"] != 0)
@@ -78,7 +78,7 @@ def run_training() -> None:
     ]
     data.drop(["greve"], axis=1, inplace=True)
 
-    data = data.dropna(axis=0, subset=[config.app_config.target])
+    data = data.dropna(axis=0, subset=[config.model_config.target])
 
     # divide train and test
     X_train, y_train, X_test, y_test = timeseries_train_test_split(

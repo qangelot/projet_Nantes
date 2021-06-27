@@ -1,6 +1,6 @@
 import sqlite3 as sql
 import typing as t
-from pathlib import Path
+import os 
 
 import joblib
 import pandas as pd
@@ -13,7 +13,7 @@ from attendance_model.config.core import DATASET_DIR, TRAINED_MODEL_DIR, config
 def load_dataset(*, file_name: str) -> pd.DataFrame:
     """Load the necessary data from the datawarehouse."""
 
-    conn = sql.connect(Path(f"{DATASET_DIR}/{file_name}"))
+    conn = sql.connect(os.path.join(DATASET_DIR/file_name))
     cursor = conn.cursor()
 
     SQL_Query = pd.read_sql_query(

@@ -13,7 +13,7 @@ freq_pipeline = Pipeline(
         # ===== ADDITIONAL FEATURES =====
         (
             "date_features",
-            fe.DatetimeVariableEstimator(date_variable=config.model_config.split_date),
+            fe.DatetimeVariableEstimator(date_variable="date"),
         ),
         (
             "statistical_features",
