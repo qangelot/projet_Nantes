@@ -76,7 +76,7 @@ def run_training() -> None:
         & (data["upper_outlier"] != 1)
         & (data["lower_outlier"] != 1)
     ]
-    data.drop(["greve"], axis=1, inplace=True)
+    data.drop(["greve", "upper_outlier", "lower_outlier"], axis=1, inplace=True)
 
     data = data.dropna(axis=0, subset=[config.model_config.target])
 

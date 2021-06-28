@@ -47,7 +47,7 @@ class DatetimeVariableEstimator(BaseEstimator, TransformerMixin):
             * X[self.date_variable].dt.dayofyear
             / max(X[self.date_variable].dt.dayofyear)
         )
-        X["week_sin"] = X[self.date_variable].dt.isocalendar().week
+        X["week"] = X[self.date_variable].dt.isocalendar().week
         X.set_index("date", inplace=True)
 
         return X
@@ -64,21 +64,22 @@ class StatisticalVariableEstimator(BaseEstimator, TransformerMixin):
         if not isinstance(effectif, str):
             raise ValueError("effectif should be a string")
 
-        self.reel = config.model_config.target
+        # while concatenating X and y, y column gets rename 0
+        self.reel = 0
         self.prevision = prevision
         self.effectif = effectif
 
-    def fit(self, X: pd.DataFrame, y: pd.Series = None):
+    def fit(self, X: pd.DataFrame, y: pd.Series):
         # we need this step to fit the sklearn pipeline
+        self.y = y
+
         return self
 
     def transform(self, X: pd.DataFrame) -> pd.DataFrame:
 
         # to avoid data leakage we compute the relevant statistics on train set only
         X = X.copy()
-        train = X[
-            (X["annee_scolaire"] != "2018-2019") & (X["annee_scolaire"] != "2019-2020")
-        ]
+        train = pd.concat((X, self.y))
 
         # aggregate data significantly (canteen, scholar year and week level) and compute statistics
         train["freq_predicted_%"] = train[self.prevision] / train[self.effectif]
@@ -116,7 +117,10 @@ class StatisticalVariableEstimator(BaseEstimator, TransformerMixin):
         X = X.merge(
             agg_std, left_on=["cantine_nom", "week"], right_index=True, how="left"
         )
-
+        
+        X.drop(["freq_predicted_%", "freq_predicted_%_std"], axis=1, inplace=True)
+        X.reset_index(drop=True, inplace=True)
+        
         return X
 
 

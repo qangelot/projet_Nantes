@@ -32,7 +32,7 @@ features:
   - day_of_week_sin
   - day_of_year_sin
   - day_of_year_cos
-  - week_sin 
+  - week 
   - freq_reel_%
   - freq_reel_%_std
   - greve
