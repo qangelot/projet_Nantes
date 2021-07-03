@@ -1,6 +1,5 @@
 import typing as t
 
-import numpy as np
 import pandas as pd
 
 from attendance_model import __version__ as _version

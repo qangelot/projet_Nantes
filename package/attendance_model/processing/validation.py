@@ -51,7 +51,7 @@ class DataInputSchema(BaseModel):
     """It's possible to be more strict by removing the Optional key word.
     In that case, if we run the validation process and one column is missing
     or if one type isn't the correct one, pydantic will throw a validation error."""
-    
+
     date: Optional[datetime]
     prevision: Optional[int]
     cantine_nom: Optional[str]

@@ -1,10 +1,8 @@
-import numpy as np
 import pandas as pd
 
+from attendance_model.config.core import config
 from attendance_model.pipeline import freq_pipeline
 from attendance_model.processing.data_manager import load_dataset, save_pipeline
-
-from attendance_model.config.core import config
 
 
 def timeseries_train_test_split(data, split_date):
@@ -92,7 +90,7 @@ def run_training() -> None:
     # fit model
     freq_pipeline.fit(X_train, y_train)
 
-    print(f'Score: {freq_pipeline.score(X_train, y_train)}')
+    print(f"Score: {freq_pipeline.score(X_train, y_train)}")
 
     # persist trained model
     save_pipeline(pipeline_to_persist=freq_pipeline)

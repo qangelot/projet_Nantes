@@ -1,6 +1,6 @@
+import os
 import sqlite3 as sql
 import typing as t
-import os 
 
 import joblib
 import pandas as pd
@@ -13,13 +13,12 @@ from attendance_model.config.core import DATASET_DIR, TRAINED_MODEL_DIR, config
 def load_dataset(*, file_name: str) -> pd.DataFrame:
     """Load the necessary data from the datawarehouse."""
 
-    conn = sql.connect(os.path.join(DATASET_DIR/file_name))
-    cursor = conn.cursor()
+    conn = sql.connect(os.path.join(DATASET_DIR / file_name))
 
     SQL_Query = pd.read_sql_query(
-        """select 
-    Frequentation_quotidienne.date, 
-    Frequentation_quotidienne.prevision, 
+        """select
+    Frequentation_quotidienne.date,
+    Frequentation_quotidienne.prevision,
     Frequentation_quotidienne.reel,
     Dim_site.cantine_nom,
     Dim_site.annee_scolaire,
@@ -31,10 +30,10 @@ def load_dataset(*, file_name: str) -> pd.DataFrame:
     Dim_site.longitude,
     Dim_site.latitude,
     Dim_temporelle.depuis_vacances,
-    Dim_temporelle.depuis_ferie, 
-    Dim_temporelle.depuis_juives, 
-    Dim_temporelle.ramadan_dans, 
-    Dim_temporelle.depuis_ramadan,    
+    Dim_temporelle.depuis_ferie,
+    Dim_temporelle.depuis_juives,
+    Dim_temporelle.ramadan_dans,
+    Dim_temporelle.depuis_ramadan,
     Dim_evenement.greve
 
     from Frequentation_quotidienne

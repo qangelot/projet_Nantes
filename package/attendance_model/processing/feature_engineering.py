@@ -116,10 +116,10 @@ class StatisticalVariableEstimator(BaseEstimator, TransformerMixin):
         X = X.merge(
             agg_std, left_on=["cantine_nom", "week"], right_index=True, how="left"
         )
-        
+
         X.drop(["freq_predicted_%", "freq_predicted_%_std"], axis=1, inplace=True)
         X.reset_index(drop=True, inplace=True)
-        
+
         return X
 
 

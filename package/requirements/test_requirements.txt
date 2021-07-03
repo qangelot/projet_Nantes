@@ -4,7 +4,12 @@
 pytest>=6.2.3,<6.3.0
 
 # repo maintenance tooling
+
+# code styling tool
 black==20.8b1
+# linting tool to enforce adherance to python conventions
 flake8>=3.9.0,<3.10.0
+# type checking tool
 mypy==0.812
+# check imports
 isort==5.8.0

@@ -1,5 +1,5 @@
-import pytest
 import pandas as pd
+import pytest
 
 from attendance_model.config.core import config
 from attendance_model.processing.data_manager import load_dataset
