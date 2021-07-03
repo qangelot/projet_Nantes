@@ -1,0 +1,20 @@
+; file that should be included to and excluded from the package
+
+include *.txt
+include *.md
+include *.pkl
+recursive-include ./attendance_model/*
+
+include attendance_model/datasets/frequentation_dtwh.db
+include attendance_model/trained_models/*.pkl
+include attendance_model/VERSION
+include attendance_model/config.yml
+
+include ./requirements/requirements.txt
+include ./requirements/test_requirements.txt
+
+exclude *.log
+exclude *.cfg
+
+recursive-exclude * __pycache__
+recursive-exclude * *.py[co]
