@@ -72,7 +72,6 @@ class StatisticalVariableEstimator(BaseEstimator, TransformerMixin):
     def fit(self, X: pd.DataFrame, y: pd.Series):
         # we need this step to fit the sklearn pipeline
         self.y = y
-
         return self
 
     def transform(self, X: pd.DataFrame) -> pd.DataFrame:

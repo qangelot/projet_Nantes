@@ -19,14 +19,11 @@ def make_prediction(
     """Make a prediction using a saved model pipeline."""
 
     data = pd.DataFrame(input_data)
+
     validated_data, errors = validate_inputs(input_data=data)
     results = {"predictions": None, "version": _version, "errors": errors}
 
     if not errors:
-
-        # removing strike days if any because we focus on predicting normal period
-        validated_data = validated_data.loc[(validated_data["greve"] != 1)]
-        validated_data.drop(["greve"], axis=1, inplace=True)
 
         predictions = _freq_pipeline.predict(X=validated_data)
         results = {

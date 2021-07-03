@@ -20,7 +20,7 @@ class AppConfig(BaseModel):
     """
 
     package_name: str
-    training_data_file: str
+    data_file: str
     pipeline_save_file: str
 
 
@@ -31,6 +31,7 @@ class ModelConfig(BaseModel):
     """
 
     target: str
+    inputs: List[str]
     features: List[str]
     test_size: float
     split_date: str

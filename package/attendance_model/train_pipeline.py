@@ -1,7 +1,8 @@
 import numpy as np
 import pandas as pd
-from pipeline import freq_pipeline
-from processing.data_manager import load_dataset, save_pipeline
+
+from attendance_model.pipeline import freq_pipeline
+from attendance_model.processing.data_manager import load_dataset, save_pipeline
 
 from attendance_model.config.core import config
 
@@ -61,8 +62,8 @@ def zscore_outliers(data, column, n):
 def run_training() -> None:
     """Train the attendance model."""
 
-    # read training data
-    data = load_dataset(file_name=config.app_config.training_data_file)
+    # read data
+    data = load_dataset(file_name=config.app_config.data_file)
 
     # here i consider as an outlier any data point that sits
     # 2 std away from the mean, this rigourous choice is based on the fact
@@ -90,6 +91,8 @@ def run_training() -> None:
 
     # fit model
     freq_pipeline.fit(X_train, y_train)
+
+    print(f'Score: {freq_pipeline.score(X_train, y_train)}')
 
     # persist trained model
     save_pipeline(pipeline_to_persist=freq_pipeline)

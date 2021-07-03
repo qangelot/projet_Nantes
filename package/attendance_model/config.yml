@@ -2,7 +2,7 @@
 package_name: attendance_model
 
 # Data File
-training_data_file: frequentation_dtwh.db
+data_file: frequentation_dtwh.db
 
 # Variables
 target: reel
@@ -10,7 +10,26 @@ target: reel
 pipeline_name: attendance_model
 pipeline_save_file: attendance_model_output_v
 
+# Features that will be inputed by the end users
+inputs:
+  - date
+  - prevision
+  - cantine_nom
+  - annee_scolaire
+  - effectif
+  - quartier_detail
+  - prix_quartier_detail_m2_appart
+  - prix_moyen_m2_appartement
+  - prix_moyen_m2_maison
+  - longitude
+  - latitude
+  - depuis_vacances
+  - depuis_ferie
+  - depuis_juives
+  - ramadan_dans
+  - depuis_ramadan
 
+# Both inputed features and features that will be derived in training pipeline
 features:
   - date
   - prevision
@@ -51,7 +70,7 @@ n_estimators: 150
 num_leaves: 8
 
 
-# variables with NA in train set
+# Variables with NA in train set
 categorical_vars_with_na:
   - cantine_nom
   - annee_scolaire
