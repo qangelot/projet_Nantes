@@ -85,12 +85,12 @@ class StatisticalVariableEstimator(BaseEstimator, TransformerMixin):
         train["freq_reel_%"] = train[self.reel] / train[self.effectif]
         grouped_train = train.groupby(["cantine_nom", "week", "annee_scolaire"])
         grouped_train_m = (
-            grouped_train["freq_predicted_%", "freq_reel_%", self.prevision, self.reel]
+            grouped_train[["freq_predicted_%", "freq_reel_%", self.prevision, self.reel]]
             .mean()
             .reset_index()
         )
         grouped_train_s = (
-            grouped_train["freq_predicted_%", "freq_reel_%", self.prevision, self.reel]
+            grouped_train[["freq_predicted_%", "freq_reel_%", self.prevision, self.reel]]
             .std()
             .reset_index()
         )
@@ -98,9 +98,9 @@ class StatisticalVariableEstimator(BaseEstimator, TransformerMixin):
         # then we average on the years, to have a single number per canteen and week
         # in order to be able to spread it to the test set
         agg_mean = grouped_train_m.groupby(["cantine_nom", "week"])
-        agg_mean = agg_mean["freq_predicted_%", "freq_reel_%"].mean()
+        agg_mean = agg_mean[["freq_predicted_%", "freq_reel_%"]].mean()
         agg_std = grouped_train_s.groupby(["cantine_nom", "week"])
-        agg_std = agg_std["freq_predicted_%", "freq_reel_%"].mean()
+        agg_std = agg_std[["freq_predicted_%", "freq_reel_%"]].mean()
         agg_std.rename(
             columns={
                 "freq_predicted_%": "freq_predicted_%_std",
