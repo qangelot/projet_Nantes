@@ -2,21 +2,21 @@
 # -*- coding: utf-8 -*-
 from pathlib import Path
 from setuptools import find_packages, setup
- 
+
 # Package meta-data.
-NAME = 'attendance_model'
+NAME = 'attendance-model'
 DESCRIPTION = "An end to end machine learning app to predict canteens attendance 2-3 weeks ahead in Nantes Metropole"
 URL = "https://github.com/qangelot/projet_Nantes"
 EMAIL = "q.angelot@gmail.com"
 AUTHOR = "qangelot"
 REQUIRES_PYTHON = ">=3.6.0"
- 
- 
+
+
 # ------------------------------------------------
 # If changing the License, remember to change the
 # Trove Classifier for that!
 long_description = DESCRIPTION
- 
+
 # package's VERSION file in a dictionary
 about = {}
 ROOT_DIR = Path(__file__).resolve().parent
@@ -25,13 +25,13 @@ PACKAGE_DIR = ROOT_DIR / 'attendance_model'
 with open(PACKAGE_DIR / "VERSION") as f:
    _version = f.read().strip()
    about["__version__"] = _version
- 
- 
+
+
 # libraries required for module execution
 def list_reqs(fname="requirements.txt"):
    with open(REQUIREMENTS_DIR / fname) as fd:
        return fd.read().splitlines()
- 
+
 # Where the magic happens:
 setup(
    name=NAME,
@@ -64,6 +64,3 @@ setup(
        "Programming Language :: Python :: Implementation :: PyPy",
    ],
 )
- 
-
-
