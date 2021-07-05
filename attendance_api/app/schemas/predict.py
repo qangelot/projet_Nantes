@@ -11,6 +11,9 @@ class PredictionResults(BaseModel):
 
 
 class MultipleDataInputs(BaseModel):
+    # making use of the validation schema imported from the package
+    # for example, if providing "prevision" with a number in a string format,
+    # fastapi will convert it to integer under the hood
     inputs: List[DataInputSchema]
 
     class Config:

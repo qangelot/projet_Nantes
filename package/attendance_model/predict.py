@@ -35,9 +35,12 @@ def make_prediction(
             "errors": errors,
         }
 
-    if len(y_test) > 0:
+    try:
         print(f"Root Mean Square Error: {str(np.sqrt(mean_squared_error(y_test, results['predictions'])))}")
         print(f"Mean Absolute Error: {str(mean_absolute_error(y_test, results['predictions']))}")
         print(f"Median Absolute Error: {str(median_absolute_error(y_test, results['predictions']))}")
+
+    except:
+        pass
 
     return results

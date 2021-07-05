@@ -5,8 +5,8 @@ from fastapi.middleware.cors import CORSMiddleware
 from fastapi.responses import HTMLResponse
 from loguru import logger
 
-from .api import api_router
-from .config import settings, setup_app_logging
+from api import api_router
+from config import settings, setup_app_logging
 
 
 # setup logging as early as possible in file

@@ -27,8 +27,9 @@ def health() -> dict:
 
 @api_router.post("/predict", response_model=schemas.PredictionResults, status_code=200)
 async def predict(input_data: schemas.MultipleDataInputs) -> Any:
-    """ Make Canteen Attendance predictions with the attendance package """
+    """ Make Canteen Attendance predictions with the attendance-model package. """
 
+    # the input data is following the MultipleDataInputs schema defined in the package
     # jsonable_encoder handles loading the pydantic data into json format
     input_df = pd.DataFrame(jsonable_encoder(input_data.inputs))
 

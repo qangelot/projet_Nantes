@@ -9,6 +9,7 @@ from pydantic import AnyHttpUrl, BaseSettings
 
 
 class LoggingSettings(BaseSettings):
+    # logging level of the app (CRITICAL, ERROR, WARNING, INFO, DEBUG)
     LOGGING_LEVEL: int = logging.INFO
 
 
@@ -55,6 +56,7 @@ class InterceptHandler(logging.Handler):
 def setup_app_logging(config: Settings) -> None:
     """Prepare custom logging for the app."""
 
+    # get the default logs from web server (on top of the ones we set up)
     LOGGERS = ("uvicorn.asgi", "uvicorn.access")
     logging.getLogger().handlers = [InterceptHandler()]
     for logger_name in LOGGERS:
