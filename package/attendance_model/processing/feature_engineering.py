@@ -65,20 +65,18 @@ class StatisticalVariableEstimator(BaseEstimator, TransformerMixin):
             raise ValueError("effectif should be a string")
 
         # while concatenating X and y, y column gets rename 0
-        self.reel = 0
+        self.reel = config.model_config.target
         self.prevision = prevision
         self.effectif = effectif
 
     def fit(self, X: pd.DataFrame, y: pd.Series):
-        # we need this step to fit the sklearn pipeline
-        self.y = y
-        return self
-
-    def transform(self, X: pd.DataFrame) -> pd.DataFrame:
-
+        
         # to avoid data leakage we compute the relevant statistics on train set only
+        y.index = X.index
+        self.y = y
+
         X = X.copy()
-        train = pd.concat((X, self.y))
+        train = pd.concat((X, self.y), axis=1)
 
         # aggregate data significantly (canteen, scholar year and week level) and compute statistics
         train["freq_predicted_%"] = train[self.prevision] / train[self.effectif]
@@ -98,10 +96,11 @@ class StatisticalVariableEstimator(BaseEstimator, TransformerMixin):
         # then we average on the years, to have a single number per canteen and week
         # in order to be able to spread it to the test set
         agg_mean = grouped_train_m.groupby(["cantine_nom", "week"])
-        agg_mean = agg_mean[["freq_predicted_%", "freq_reel_%"]].mean()
+        self.agg_mean = agg_mean[["freq_predicted_%", "freq_reel_%"]].mean()
         agg_std = grouped_train_s.groupby(["cantine_nom", "week"])
-        agg_std = agg_std[["freq_predicted_%", "freq_reel_%"]].mean()
-        agg_std.rename(
+        self.agg_std = agg_std[["freq_predicted_%", "freq_reel_%"]].mean()
+
+        self.agg_std.rename(
             columns={
                 "freq_predicted_%": "freq_predicted_%_std",
                 "freq_reel_%": "freq_reel_%_std",
@@ -109,12 +108,16 @@ class StatisticalVariableEstimator(BaseEstimator, TransformerMixin):
             inplace=True,
         )
 
+        return self
+
+    def transform(self, X: pd.DataFrame) -> pd.DataFrame:
+
         X = X.merge(
-            agg_mean, left_on=["cantine_nom", "week"], right_index=True, how="left"
+            self.agg_mean, left_on=["cantine_nom", "week"], right_index=True, how="left"
         )
 
         X = X.merge(
-            agg_std, left_on=["cantine_nom", "week"], right_index=True, how="left"
+            self.agg_std, left_on=["cantine_nom", "week"], right_index=True, how="left"
         )
 
         X.drop(["freq_predicted_%", "freq_predicted_%_std"], axis=1, inplace=True)

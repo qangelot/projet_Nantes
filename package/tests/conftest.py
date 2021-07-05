@@ -30,6 +30,6 @@ def sample_input_data():
         data, split_date=config.model_config.split_date
     )
 
-    test = pd.concat((X_test, y_test))
+    test = pd.concat((X_test, y_test), axis=1)
 
     return test

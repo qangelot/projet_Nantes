@@ -38,8 +38,8 @@ def test_statistical_variable_estimator(sample_input_data):
     # while concatenating X and y in conftest.py, y column gets rename 0
     temp = transformer.fit_transform(sample_input_data)
 
-    y_test = temp[0]
-    X_test = temp.drop([0], axis=1)
+    y_test = temp[config.model_config.target]
+    X_test = temp.drop([config.model_config.target], axis=1)
 
     # testing that the first data point from test set is the one we expect
     assert X_test["prevision"].iat[0] == 126.0

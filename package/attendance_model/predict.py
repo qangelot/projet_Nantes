@@ -1,6 +1,8 @@
 import typing as t
 
+import numpy as np
 import pandas as pd
+from sklearn.metrics import mean_squared_error, mean_absolute_error, median_absolute_error
 
 from attendance_model import __version__ as _version
 from attendance_model.config.core import config
@@ -17,7 +19,9 @@ def make_prediction(
 ) -> dict:
     """Make a prediction using a saved model pipeline."""
 
-    data = pd.DataFrame(input_data)
+    data = pd.DataFrame(input_data) 
+    if "reel" in data.columns:
+        y_test = data.reel
 
     validated_data, errors = validate_inputs(input_data=data)
     results = {"predictions": None, "version": _version, "errors": errors}
@@ -30,5 +34,10 @@ def make_prediction(
             "version": _version,
             "errors": errors,
         }
+
+    if len(y_test) > 0:
+        print(f"Root Mean Square Error: {str(np.sqrt(mean_squared_error(y_test, results['predictions'])))}")
+        print(f"Mean Absolute Error: {str(mean_absolute_error(y_test, results['predictions']))}")
+        print(f"Median Absolute Error: {str(median_absolute_error(y_test, results['predictions']))}")
 
     return results
