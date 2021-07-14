@@ -12,6 +12,7 @@ from attendance_model.predict import make_prediction
 from app import __version__, schemas
 from app.config import settings
 
+
 api_router = APIRouter()
 
 

@@ -3,6 +3,8 @@ from typing import Any
 from fastapi import APIRouter, FastAPI, Request
 from fastapi.middleware.cors import CORSMiddleware
 from fastapi.responses import HTMLResponse
+from fastapi.templating import Jinja2Templates
+
 from loguru import logger
 
 from api import api_router
@@ -16,8 +18,9 @@ setup_app_logging(config=settings)
 app = FastAPI(
     title=settings.PROJECT_NAME, openapi_url=f"{settings.API_V1_STR}/openapi.json"
 )
-
 root_router = APIRouter()
+
+templates = Jinja2Templates(directory="templates")
 
 
 @root_router.get("/")
@@ -40,7 +43,8 @@ def index(request: Request) -> Any:
 app.include_router(api_router, prefix=settings.API_V1_STR)
 app.include_router(root_router)
 
-# Set all CORS enabled origins
+# Set all CORS enabled origins 
+# to make cross-origin requests
 if settings.BACKEND_CORS_ORIGINS:
     app.add_middleware(
         CORSMiddleware,
@@ -52,8 +56,7 @@ if settings.BACKEND_CORS_ORIGINS:
 
 
 if __name__ == "__main__":
-    # Use this for debugging purposes only
     logger.warning("Running in development mode. Do not run like this in production.")
     import uvicorn
 
-    uvicorn.run(app, host="localhost", port=8001, log_level="debug")
+    uvicorn.run("app.main:app", host="localhost", port=8001, reload=True, log_level="debug")
