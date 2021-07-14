@@ -1,0 +1,204 @@
+<!DOCTYPE html>
+
+<html>
+
+<head>
+    {% block head %}
+<title>Opti Cantines BI</title>
+<link rel="shortcut icon" type = 'image/x-icon' href="../static/img/favicon.ico">
+
+<style>
+.card {box-shadow: 0 0 10px rgba(85, 83, 83, 0.623);
+		margin-top: 20px; margin-bottom: 20px;}
+.sep {
+    width:75%;
+    margin:0 auto;
+	text-align: center;
+}
+.jumbotron{
+    height: 5vh;
+	display: flex;
+	justify-content: center;
+	align-items: center;
+	background-color: #EEEEEE !important;
+}
+span {
+	font-size: 1.5rem;
+	color: ivory;
+}
+.link-nav {
+	font-size: 1.2rem;
+	color: ivory;
+}
+
+</style>
+
+<!--import script files needed fro plotly and bootstrap-->
+<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
+<script src="https://code.jquery.com/jquery-3.3.1.min.js" integrity="sha384-tsQFqpEReu7ZLhBV2VZlAu7zcOV+rXbYlF2cqB8txI/8aZajjp4Bqd+V6D5IgvKT" crossorigin="anonymous"></script>	
+<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js" integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q" crossorigin="anonymous"></script>
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js" integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl" crossorigin="anonymous"></script>
+<script src="https://cdn.plot.ly/plotly-latest.min.js"></script>
+
+</head>
+
+<body style="background-color: #EEEEEE ;">
+
+<!--navbar links-->		
+<nav class="navbar navbar-expand-lg py-3 navbar-light sticky-top" style="background-color: #334257fa;">
+	<a class="navbar-brand mb-0 h1" href="#">
+		<img src="../static/img/nantes_nobg.png" width="30" height="30" alt="logo nantes">
+		<span> Opti Cantines BI	</span>
+	</a>
+	<button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarTogglerDemo02" aria-controls="navbarTogglerDemo02" aria-expanded="false" aria-label="Toggle navigation">
+    	<span class="navbar-toggler-icon"></span>
+	</button>
+
+	<div class="collapse navbar-collapse" id="navbarTogglerDemo02">
+    <ul class="navbar-nav ml-auto mt-2 mt-lg-0">
+    	<li class="nav-item">
+        <a class="nav-link" href="/freq"> <span class="link-nav"> Fréquentation </span> </a>
+		</li>
+		<li class="nav-item">
+			<a class="nav-link" href="/menus"> <span class="link-nav"> Menus </span> </a>
+		</li>
+		<li class="nav-item">
+			<a class="nav-link" href="/tempo"> <span class="link-nav"> Temporalité </span> </a>
+		</li>
+		<li class="nav-item">
+			<a class="nav-link" href="/geo"> <span class="link-nav"> Taux de présence </span> </a>
+		</li>
+
+    </ul>
+	</div>
+</nav>
+
+	<div class="container-fluid">
+		<!--chart descriptions-->
+
+		<div class="card mt-5" style="width: 100%;">
+			<div class="card-body">
+			<h2 class="card-title text-center">Tableau de suivi de l'activité des cantines nantaises</h2>
+			<p class="card-text text-center">Analyse des facteurs de la fréquentation des cantines de la métropole
+				Nantaise au regard des prévisions réalisées par les agents depuis 2010.</p>
+		</div>
+		<div class="sep"><hr/></div>
+
+			<!--selectors-->	
+			<div class="container mt-3">
+			<!--cantine-->	
+            {% block action %}{% endblock %}
+
+					<div class="row">
+
+				<div class="col-lg-3 col-md-6 col-xs-12 mt-3">
+
+				<div class="dropdown">
+					<button class="btn btn-muted btn-lg dropdown-toggle" type="button" 
+					id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" 
+					aria-expanded="false">Filtrer par cantine</button>
+					
+					<div class="dropdown-menu dropdown-menu-right" aria-labelledby="dropdownMenuButton" id="check-boxes">
+					<div class="form-check ml-3">
+							<select name="cantines">
+							{% for cantine in cantines %}
+								<option value="{{cantine}}" id="{{cantine}}" >{{cantine}}</option>
+							{% endfor %}
+							</select>
+							<br>
+					</div>
+				</div>
+				</div>
+			</div>
+
+			<!--dates-->	
+			<div class="col-lg-3 col-md-6 col-xs-12 mt-2">
+
+				<div class="form-group"> <!-- Date input -->
+				<label class="control-label" for="start_date">Date de début</label>
+				<input class="form-control" id="start_date" name="start_date" placeholder="DD/MM//YYY" type="text"/>
+				</div>
+			</div>
+
+			<div class="col-md-3 col-sm-6 col-xs-12 mt-2">
+
+				<div class="form-group"> <!-- Date input -->
+				<label class="control-label" for="end_date">Date de fin</label>
+				<input class="form-control" id="end_date" name="end_date" placeholder="DD/MM//YYY" type="text"/>
+				</div>
+			</div>
+
+				<div class="col-lg-3 col-md-6 col-xs-12 mt-4">
+				<div class="form-group"> <!-- Submit button -->
+				<button class="btn btn-primary " name="submit" type="submit">Submit</button>
+				</div>
+			</div>
+
+		</div>    
+
+			</form>
+			</div>
+		</div>
+	</div>		
+
+    {% endblock %}
+
+
+    <div id="content">{% block content %}{% endblock %}</div>
+
+
+</body>
+
+<footer>
+
+    {% block footer %}
+
+	<div class="logo-and-copyright text-center mt-4">
+		<div class="logo-container">
+		<a href="https://metropole.nantes.fr/"  target="_blank" style="display:block">
+		<img alt="Nantes" class="ufb-logo" src="../static/img/nantes_nobg.png" width="100" height="80">
+		</a>
+		</div>
+		<div class="copyright-container udlite-text-xs mt-2 mb-3">
+		© 2021
+		</div>
+	</div>
+
+    <script type="text/javascript">
+    	// plots the figure by id using Plotly
+    	// id must match the div id above in the html
+    	var figures = {{figuresJSON | safe}};
+		var ids = {{ids | safe}};
+		for(var i in figures) {
+			Plotly.plot(ids[i],
+				figures[i].data,
+				figures[i].layout || {});
+		};
+
+		// checks or unchecks the filter boxes based on the select all box
+        $("#select-all-check").change(function () {
+        	$("#check-boxes input:checkbox").prop('checked', $(this).prop('checked'));
+        });
+
+		// uncheck select-all box when unchecking another box
+		$("#form-filter").change(function () {
+			if (!$(this).prop('checked')) {
+				$("#select-all-check").prop('checked', false);
+			}
+		});
+
+		// check select-all box when re-checking all of the other boxes
+		$("#form-filter").change(function () {
+			if ($(".country-check:checked").length == $('.form-check').length - 1) {
+				$("#select-all-check").prop('checked', true);
+			}
+		});
+
+    </script>
+
+    {% endblock %}
+
+</footer>
+
+
+</html>

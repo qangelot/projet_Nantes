@@ -1,0 +1,67 @@
+
+{% extends "base.html" %}
+
+{% block head %}
+
+{{ super() }}
+
+{% endblock %}
+
+{% block content %}
+
+{% block action %} <form class="px-4 py-3" role="form" method="post" action="/freq" id="form-filter"> {% endblock %}
+
+
+		<!--charts-->		
+		<div id="charts" class="container-fluid mt-5 text-center">
+
+				<div class="container">
+					<h4 style="text-align: center;">Données de fréquentation de la cantine {{ selected_canteen }}</h4>
+				</div>
+
+			<div class="row mt-3 mb-2">
+				<div class="col-lg-6 col-md-12">
+					<div class="card shadow-sm rounded">
+							<div id="{{ids[0]}}"></div>
+					</div>	
+				</div>
+				<div class="col-lg-6 col-md-12">
+					<div class="card">
+							<div id="{{ids[1]}}"></div>
+					</div>	
+				</div>
+			</div>
+
+				<div class="container mt-5">
+					<h4 style="text-align: center;">Décomposition de la série temporelle globale</h4>
+				</div>
+
+			<div class="row mt-3 mb-3">
+				<div class="col-lg-6 col-md-12">
+					<div class="card">
+							<div id="{{ids[2]}}"></div>
+					</div>	
+				</div>
+				<div class="col-lg-6 col-md-12">
+					<div class="card">
+							<div id="{{ids[3]}}"></div>
+					</div>	
+				</div>
+			</div>
+			<div class="row mt-3 mb-3">
+				<div class="col-lg-6 col-md-12">
+					<div class="card">
+							<div id="{{ids[4]}}"></div>
+					</div>	
+				</div>
+				<div class="col-lg-6 col-md-12">
+					<div class="card">
+							<div id="{{ids[5]}}"></div>
+					</div>	
+				</div>
+					
+			</div>
+		
+		</div>
+
+{% endblock %}
