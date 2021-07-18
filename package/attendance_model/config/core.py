@@ -35,6 +35,9 @@ class ModelConfig(BaseModel):
     features: List[str]
     test_size: float
     split_date: str
+    alpha: float
+    objective: str
+    metric: str
     random_state: int
     max_depth: int
     n_estimators: int

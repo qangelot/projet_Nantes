@@ -1,4 +1,3 @@
-import category_encoders as ce
 from lightgbm import LGBMRegressor
 from sklearn.pipeline import Pipeline
 from sklearn.preprocessing import StandardScaler
@@ -27,9 +26,8 @@ freq_pipeline = Pipeline(
         ),
         (
             "categ_imputation",
-            ce.target_encoder.TargetEncoder(
-                cols=config.model_config.categorical_vars_with_na,
-                smoothing=10,
+            fe.TargetEncoder(
+                variables=config.model_config.categorical_vars_with_na,
             ),
         ),
         # ===== SCALING =====
@@ -38,6 +36,9 @@ freq_pipeline = Pipeline(
         (
             "LGBR",
             LGBMRegressor(
+                alpha=config.model_config.alpha,
+                objective=config.model_config.objective,
+                metric=config.model_config.metric,
                 max_depth=config.model_config.max_depth,
                 n_estimators=config.model_config.n_estimators,
                 num_leaves=config.model_config.num_leaves,

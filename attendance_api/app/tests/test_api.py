@@ -21,4 +21,4 @@ def test_make_prediction(client: TestClient, test_data: pd.DataFrame) -> None:
     preds = response.json()
     assert preds["predictions"]
     assert preds["errors"] is None
-    assert math.isclose(preds[0], 116.99946577306487, abs_tol=1)
+    assert math.isclose(preds[0], 131.59946577306487, abs_tol=1)

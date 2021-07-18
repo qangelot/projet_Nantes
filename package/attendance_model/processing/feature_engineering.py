@@ -150,3 +150,40 @@ class NumericalImputer(BaseEstimator, TransformerMixin):
         for feature in self.variables:
             X[feature].fillna(self.imputer_dict_[feature], inplace=True)
         return X
+
+
+class TargetEncoder(BaseEstimator, TransformerMixin):
+    """String to numbers categorical encoder."""
+
+    def __init__(self, variables: List[str]):
+
+        if not isinstance(variables, list):
+            raise ValueError("Variables should be in a list")
+
+        self.variables = variables
+
+    def fit(self, X: pd.DataFrame, y: pd.Series):
+        
+        y.index = X.index
+        self.y = y
+
+        X = X.copy()
+        
+        temp = pd.concat((X, self.y), axis=1)
+        temp.columns = list(X.columns) + ["target"]
+
+        # persist enconding in dictionary
+        self.encoder_dict_ = {}
+
+        for var in self.variables:
+            t = temp.groupby([var])["target"].mean().sort_values(ascending=True).index
+            self.encoder_dict_[var] = {k: i for i, k in enumerate(t, 0)}
+
+        return self
+
+    def transform(self, X):
+
+        X = X.copy()
+        for feature in self.variables:
+            X[feature] = X[feature].map(self.encoder_dict_[feature])
+        return X

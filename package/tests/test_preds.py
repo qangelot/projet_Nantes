@@ -17,4 +17,4 @@ def test_make_prediction(sample_input_data):
     assert isinstance(preds[0], np.float64)
     assert res.get("errors") is None
     assert len(preds) == 12077
-    assert math.isclose(preds[0], 116.99946577306487, abs_tol=1)
+    assert math.isclose(preds[0], 131.80641735650335, abs_tol=1)

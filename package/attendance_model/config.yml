@@ -63,6 +63,12 @@ split_date: 2018-09-03
 
 random_state: 42
 
+alpha: 0.9
+
+objective: "quantile"
+
+metric: "quantile"
+
 max_depth: 5
 
 n_estimators: 150
