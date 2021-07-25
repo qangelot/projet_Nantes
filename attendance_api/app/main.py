@@ -10,7 +10,6 @@ from loguru import logger
 # for dev purposes
 from api import api_router
 from config import settings, setup_app_logging
-
 # for testing purposes 
 # from .api import api_router
 # from .config import settings, setup_app_logging
