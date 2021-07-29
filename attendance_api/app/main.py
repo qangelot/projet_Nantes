@@ -8,8 +8,9 @@ from fastapi.templating import Jinja2Templates
 from loguru import logger
 
 # for dev purposes
-from api import api_router
-from config import settings, setup_app_logging
+from app.api import api_router
+from app.config import settings, setup_app_logging
+
 # for testing purposes 
 # from .api import api_router
 # from .config import settings, setup_app_logging
@@ -23,8 +24,6 @@ app = FastAPI(
     title=settings.PROJECT_NAME, openapi_url=f"{settings.API_V1_STR}/openapi.json"
 )
 root_router = APIRouter()
-
-templates = Jinja2Templates(directory="templates")
 
 
 @root_router.get("/")
@@ -62,5 +61,4 @@ if settings.BACKEND_CORS_ORIGINS:
 if __name__ == "__main__":
     logger.warning("Running in development mode. Do not run like this in production.")
     import uvicorn
-
     uvicorn.run("app.main:app", host="localhost", port=8001, reload=True, log_level="debug")

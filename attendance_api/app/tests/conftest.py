@@ -39,8 +39,7 @@ def test_data()-> pd.DataFrame:
     return test
 
 
-# standard pattern for setting up a fastapi test client
-# to allow for api calls
+# pattern to set up a fastapi test client to allow for api calls
 @pytest.fixture()
 def client() -> Generator:
     with TestClient(app) as _client:
