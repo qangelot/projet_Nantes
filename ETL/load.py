@@ -153,10 +153,10 @@ def main():
     conn.commit()
 
     # insertion des données dans le dtwh
+    frequentation_quotidienne_df.to_sql('Frequentation_quotidienne', 
+                        conn, if_exists='append', index=False)   
     dim_site_df.to_sql('Dim_site', conn,
                         if_exists='append', index=False)
-    frequentation_quotidienne_df.to_sql('Frequentation_quotidienne', 
-                        conn, if_exists='append', index=False)
     dim_menu_df.to_sql('Dim_menu', conn,
                         if_exists='append', index=False)
     dim_temporelle_df.to_sql('Dim_temporelle', 

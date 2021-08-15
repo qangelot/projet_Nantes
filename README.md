@@ -1,7 +1,7 @@
 
 # projet_Nantes
 
-Machine learning package to predict canteens attendance 2-3 weeks ahead in Nantes Metropole. The package focuses on predicting 
+Machine learning package to predict canteens attendance 2-3 weeks ahead in Nantes Metropole.
 
 ## Architecture
 
