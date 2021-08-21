@@ -5,13 +5,15 @@ Machine learning package to predict canteens attendance 2-3 weeks ahead in Nante
 
 ## Architecture
 
-Data folder stores all the raw data used in this data science project.
+- Data folder stores all the raw data used in this data science project.
 
-Package folder stores all the config and python files necessary to build the machine learning package.
+- Research folder stores all the notebooks used to explore the available data files, build ETL, process the data, elaborate the best possible predictive model and analyze its results.
 
-Research folder stores all the notebooks used to explore the available data files, build ETL, process the data, elaborate the best possible predictive model and analyze its results.
+- ETL folder contains the files necessary to proceed to ETL step
 
-API folder stores all files necessary to build a functional Rest API to serve predictions of the Machine learning model in an application.
+- Package folder stores all the config and python files necessary to build the machine learning package.
+
+- API folder stores all files necessary to build a functional Rest API to serve predictions of the Machine learning model in an application.
 
 
 
@@ -23,7 +25,13 @@ Use the package manager [pip](https://pip.pypa.io/en/stable/) to install attenda
 pip install attendance_model
 ```
 
-## Usage
+## ETL Usage
+
+```bash
+python3 main.py
+```
+
+## Package Usage
 
 ```python
 import attendance_model
@@ -33,6 +41,12 @@ attendance_model.train_pipeline.run_training()
 
 # returns predictions for the provided input data
 attendance_model.predict.make_prediction(input_data)
+```
+
+## API Usage
+
+```bash
+tox -e run
 ```
 
 ## Contributing
