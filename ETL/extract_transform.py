@@ -94,8 +94,8 @@ def main():
     musulm["date"] = pd.to_datetime(musulm["date"], format="%d/%m/%Y")
 
     # same for ramadan
-    ramad = pd.read_csv('../data/ramad.csv', header=None, sep=',')
-    ramad.rename(columns={0: "date", 1: "ramadan"}, inplace=True)
+    ramad = pd.read_csv('../data/ramad.csv', header=0, sep=',')
+    # ramad.rename(columns={0: "date", 1: "ramadan"}, inplace=True)
     ramad["date"] = pd.to_datetime(ramad["date"], format="%d/%m/%Y")
 
     # merge relgion events dataframes based on the length of the time serie (freqJ)
@@ -117,7 +117,7 @@ def main():
     ############################## Geographic dataframe building #################################
     # now that we have created our main analysis table, we can go on to integrate additional data
 
-    # read data from main CSVs 
+    # read data from main CSVs
     appariement = pd.read_csv('../data/appariement_ecoles_cantines.csv', header=0, sep=',')
     appariement.rename(columns={"ecole": "Ecole"}, inplace=True)
     appariement['Ecole'] = appariement['Ecole'].apply(lambda x: x.rsplit(' ', 1)[0])

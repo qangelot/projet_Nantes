@@ -33,6 +33,16 @@ python3 main.py
 
 ## Package Usage
 
+### Train the pipeline
+```bash
+tox -e train
+```
+
+### Test the package
+```bash
+tox -e test_package
+```
+
 ```python
 import attendance_model
 
@@ -47,6 +57,10 @@ attendance_model.predict.make_prediction(input_data)
 
 ```bash
 tox -e run
+```
+
+```bash
+tox -e test_app
 ```
 
 ## Contributing
