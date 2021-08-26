@@ -43,6 +43,7 @@ tox -e train
 tox -e test_package
 ```
 
+### Use the package
 ```python
 import attendance_model
 
